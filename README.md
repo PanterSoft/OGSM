@@ -33,3 +33,4 @@ www-data ALL=(ALL) NOPASSWD: /sbin/poweroff, /sbin/reboot, /sbin/shutdown
 ```
 
 Type ``` sudo nano /etc/apache2/sites-available/000-default.conf ``` and Edit ``` DocumentRoot /var/www/html ``` to ``` DocumentRoot /var/www/html/OGSM ```
+
