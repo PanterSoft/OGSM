@@ -1,3 +1,6 @@
 ToDo.txt
 .DS_Store
 backend/linuxgsm.sh
+backend/Servers
+backend/logs
+backend/third-part-deps

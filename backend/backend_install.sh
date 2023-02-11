@@ -1,0 +1,3 @@
+#!/bin/bash
+
+WORKDIR=$(pwd)
