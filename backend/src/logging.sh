@@ -94,15 +94,15 @@ while getopts ":sVDZ" opt ; do
         case $opt in
         s)
                 verbosity=$silent_lvl
-                edebug "-s specified: Silent mode"
+                ldebug "-s specified: Silent mode"
                 ;;
         V)
                 verbosity=$inf_lvl
-                edebug "-V specified: Verbose mode"
+                ldebug "-V specified: Verbose mode"
                 ;;
         G)
                 verbosity=$dbg_lvl
-                edebug "-D specified: Debug mode"
+                ldebug "-D specified: Debug mode"
                 ;;
         Z)
                 NO_JOB_LOGGING=0

@@ -47,6 +47,8 @@ check_server_path() {
 }
 
 install_srv() {
+    check_server_path
+    check_user
     if (! test -d $SERVER_HOME_PATH) then
         mkdir $SERVER_HOME_PATH
         cp linuxgsm.sh $SERVER_HOME_PATH
@@ -55,18 +57,48 @@ install_srv() {
         bash $SERVERNAME install
         linfo "Server Install Finished"
     else
-        lerror "!!! A Server is Already Installed !!!"
+        lerror "!!! Server is Already Installed !!!"
     fi
 }
 
-run_init() {
-    check_dependencys
-    check_server_path
-    check_user
-    install_srv
+start_srv() {
+    linfo "Server Starting"
 }
 
-# RUN
-Log_Open
-run_init
-Log_Close
+stop_srv() {
+    linfo "Server Stopping"
+}
+
+restart_srv() {
+    linfo "Server Restarting"
+}
+
+status_srv() {
+    linfo "Server Status"
+}
+
+run_init() {
+    linfo "Backend init Started"
+    check_dependencys
+}
+
+run() {
+    Log_Open
+    case $ACTION in
+        install)
+            install_srv;;
+        start)
+            start_srv;;
+        stop)
+            stop_srv;;
+        restart)
+            restart_srv;;
+        status)
+            status_srv;;
+        *)
+            run_init;;
+    esac
+    Log_Close
+}
+
+run
