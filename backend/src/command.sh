@@ -27,6 +27,14 @@ check_dependencys() {
     fi
 }
 
+check_user() {
+    if (id -u $SERVERNAME != 0) then
+        useradd $SERVERNAME -d $SERVER_HOME_PATH
+    else
+        linfo "User already exists"
+    fi
+}
+
 check_server_path() {
     if (! test -d $SERVERS_PATH) then
         mkdir -p $SERVERS_PATH
