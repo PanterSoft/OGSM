@@ -31,7 +31,8 @@ check_dependencys() {
 check_user() {
     if (! id -u $SERVERNAME >/dev/null 2>&1) then
         linfo "Creating User $SERVERNAME"
-        useradd -N $SERVERNAME -d $SERVER_HOME_PATH
+        useradd -N -s /bin/bash/ $SERVERNAME -d $SERVER_HOME_PATH
+        passwd -d $SERVERNAME
         usermod -aG gameservers,sudo $SERVERNAME
     else
         linfo "User already exists"
@@ -51,11 +52,11 @@ install_srv() {
     check_user
     if (! test -d $SERVER_HOME_PATH) then
         mkdir $SERVER_HOME_PATH
-        chown $SERVERNAME $SERVER_HOME_PATH
+        sudo chown $SERVERNAME:gameservers $SERVER_HOME_PATH
         cp linuxgsm.sh $SERVER_HOME_PATH
         cd $SERVER_HOME_PATH
-        bash linuxgsm.sh $SERVERNAME
-        bash $SERVERNAME install
+        sudo -u $SERVERNAME bash linuxgsm.sh $SERVERNAME
+        sudo -u $SERVERNAME bash $SERVERNAME ai
         linfo "Server Install Finished"
     else
         lerror "!!! Server is Already Installed !!!"
