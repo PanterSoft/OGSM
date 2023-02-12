@@ -31,7 +31,8 @@ check_dependencys() {
 check_user() {
     if (! id -u $SERVERNAME >/dev/null 2>&1) then
         linfo "Creating User $SERVERNAME"
-        useradd $SERVERNAME -d $SERVER_HOME_PATH
+        useradd -N $SERVERNAME -d $SERVER_HOME_PATH
+        usermod -aG gameservers,sudo $SERVERNAME
     else
         linfo "User already exists"
     fi
@@ -47,10 +48,10 @@ check_server_path() {
 }
 
 install_srv() {
-    check_server_path
     check_user
     if (! test -d $SERVER_HOME_PATH) then
         mkdir $SERVER_HOME_PATH
+        chown $SERVERNAME $SERVER_HOME_PATH
         cp linuxgsm.sh $SERVER_HOME_PATH
         cd $SERVER_HOME_PATH
         bash linuxgsm.sh $SERVERNAME
@@ -77,9 +78,15 @@ status_srv() {
     linfo "Server Status"
 }
 
+uninstall_srv() {
+    linfo "Server Uninstall Started"
+}
+
 run_init() {
     linfo "Backend init Started"
     check_dependencys
+    check_server_path
+    groupadd -f gameservers
 }
 
 run() {
@@ -95,6 +102,8 @@ run() {
             restart_srv;;
         status)
             status_srv;;
+        uninstall)
+            uninstall_srv;;
         *)
             run_init;;
     esac
