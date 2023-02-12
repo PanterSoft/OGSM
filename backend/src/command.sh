@@ -14,8 +14,8 @@ ACTION=$1
 SERVERNAME=$2
 
 # Vars
-SERVERS_FOLDER="$WORK_DIR/Servers"
-SERVER_HOME_PATH="$SERVERS_FOLDER/$SERVERNAME"
+SERVERS_PATH="$WORK_DIR/Servers"
+SERVER_HOME_PATH="$SERVERS_PATH/$SERVERNAME"
 source $WORK_DIR/src/logging.sh $LOG_LEVEL $ACTION $SERVERNAME
 
 check_dependencys() {
@@ -28,9 +28,9 @@ check_dependencys() {
 }
 
 check_server_path() {
-    if (! test -d $SERVER_HOME_PATH) then
-        mkdir -p $SERVER_HOME_PATH
-        einfo $SERVER_HOME_PATH
+    if (! test -d $SERVERS_PATH) then
+        mkdir -p $SERVERS_PATH
+        linfo $SERVERS_PATH
     fi
 }
 

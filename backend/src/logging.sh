@@ -47,6 +47,11 @@ function elog() {
         fi
 }
 
+if (! test -d $WORK_DIR/logs) then
+        mkdir -p $WORK_DIR/logs
+fi
+
+
 function Log_Open() {
         if [ $NO_JOB_LOGGING -eq 1 ] ; then
                 linfo "Not logging to a logfile because -Z option specified." #(*)
