@@ -67,7 +67,7 @@ function Log_Open() {
                 PIPE_OPENED=1
                 # Logging String
                 lnotify Logging to $LOGFILE  # (*)
-                [ $SUDO_USER ] && enotify "Sudo user: $SUDO_USER" #(*)
+                [ $SUDO_USER ] && lnotify "Sudo user: $SUDO_USER" #(*)
         fi
 }
 
@@ -75,7 +75,7 @@ function Log_Close() {
         if [ ${PIPE_OPENED} ] ; then
                 exec 1<&3
                 sleep 0.2
-                ps -pid $teepid >/dev/null
+                ps --pid $teepid >/dev/null
                 if [ $? -eq 0 ] ; then
                         # a wait $teepid whould be better but some
                         # commands leave file descriptors open

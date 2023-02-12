@@ -16,6 +16,7 @@ SERVERNAME=$2
 # Vars
 SERVERS_PATH="$WORK_DIR/Servers"
 SERVER_HOME_PATH="$SERVERS_PATH/$SERVERNAME"
+
 source $WORK_DIR/src/logging.sh $LOG_LEVEL $ACTION $SERVERNAME
 
 check_dependencys() {
@@ -28,7 +29,8 @@ check_dependencys() {
 }
 
 check_user() {
-    if (id -u $SERVERNAME != 0) then
+    if (! id -u $SERVERNAME >/dev/null 2>&1) then
+        linfo "Creating User $SERVERNAME"
         useradd $SERVERNAME -d $SERVER_HOME_PATH
     else
         linfo "User already exists"
@@ -38,7 +40,9 @@ check_user() {
 check_server_path() {
     if (! test -d $SERVERS_PATH) then
         mkdir -p $SERVERS_PATH
-        linfo $SERVERS_PATH
+        linfo "Created Server Path"
+    else
+        linfo "Server Path Exists/Valid"
     fi
 }
 
@@ -49,6 +53,7 @@ install_srv() {
         cd $SERVER_HOME_PATH
         bash linuxgsm.sh $SERVERNAME
         bash $SERVERNAME install
+        linfo "Server Install Finished"
     else
         lerror "!!! A Server is Already Installed !!!"
     fi
@@ -57,6 +62,7 @@ install_srv() {
 run_init() {
     check_dependencys
     check_server_path
+    check_user
     install_srv
 }
 

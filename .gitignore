@@ -1,6 +1,10 @@
+# General
 ToDo.txt
 .DS_Store
+.devcontainer/
+Dockerfile
+
+# Backend
 backend/linuxgsm.sh
 backend/Servers
 backend/logs
-backend/third-part-deps
